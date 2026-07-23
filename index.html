@@ -389,7 +389,7 @@
             color: #2e2e2e;
         }
 
-        /* ===== MENÚ LATERAL (SOLO AUTH) ===== */
+        /* ===== MENÚ LATERAL CON PERFIL ===== */
         .overlay {
             position: fixed;
             inset: 0;
@@ -428,7 +428,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid #282828;
         }
@@ -458,21 +458,83 @@
             background: #333;
             transform: rotate(90deg);
         }
+
+        /* Perfil de usuario en el menú */
+        .user-profile {
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 1.2rem 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a2a2a;
+            display: none;
+        }
+        .user-profile.show {
+            display: block;
+        }
+        .user-profile .avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7aa9ff, #5a8ae0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.6rem;
+        }
+        .user-profile .user-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f0f0f0;
+        }
+        .user-profile .user-email {
+            font-size: 0.85rem;
+            color: #888;
+            margin: 0.2rem 0;
+        }
+        .user-profile .user-status {
+            font-size: 0.8rem;
+            color: #6fcf97;
+            background: #1a2a1a;
+            padding: 0.15rem 0.6rem;
+            border-radius: 20px;
+            display: inline-block;
+            border: 1px solid #2a4a2a;
+        }
+        .user-profile .logout-btn {
+            background: transparent;
+            border: 1px solid #444;
+            color: #aaa;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            transition: all 0.2s;
+        }
+        .user-profile .logout-btn:hover {
+            background: #2a2a2a;
+            color: #fff;
+            border-color: #666;
+        }
+
         .menu-items {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.3rem;
         }
         .menu-item {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 0.8rem 1rem;
-            border-radius: 16px;
+            padding: 0.7rem 1rem;
+            border-radius: 14px;
             color: #ddd;
             text-decoration: none;
             transition: background 0.15s, color 0.15s;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 450;
             cursor: pointer;
             border: none;
@@ -481,7 +543,7 @@
             text-align: left;
         }
         .menu-item i {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             width: 1.8rem;
             text-align: center;
             color: #888;
@@ -504,7 +566,7 @@
         .menu-divider {
             height: 1px;
             background: #282828;
-            margin: 0.4rem 0;
+            margin: 0.3rem 0;
         }
         .menu-footer {
             margin-top: 1.5rem;
@@ -515,7 +577,7 @@
             text-align: center;
         }
 
-        /* ===== MODAL AUTH CON reCAPTCHA ===== */
+        /* ===== MODAL AUTH ===== */
         .auth-modal {
             position: fixed;
             top: 50%;
@@ -636,7 +698,6 @@
             display: block;
         }
 
-        /* reCAPTCHA wrapper */
         .recaptcha-wrapper {
             display: flex;
             justify-content: center;
@@ -788,6 +849,11 @@
             .recaptcha-wrapper>div {
                 transform: scale(0.85);
             }
+            .user-profile .avatar {
+                width: 44px;
+                height: 44px;
+                font-size: 1.4rem;
+            }
         }
         @media (max-width: 480px) {
             .logo-wrapper img {
@@ -830,6 +896,11 @@
             .recaptcha-wrapper>div {
                 transform: scale(0.75);
             }
+            .user-profile .avatar {
+                width: 38px;
+                height: 38px;
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -846,7 +917,7 @@
     <!-- ===== OVERLAY ===== -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- ===== MENÚ LATERAL (SOLO AUTH) ===== -->
+    <!-- ===== MENÚ LATERAL CON PERFIL ===== -->
     <nav class="side-menu" id="sideMenu">
         <div class="side-menu-header">
             <span class="brand-small">Aqirax</span>
@@ -854,45 +925,52 @@
                 <i class="fas fa-times"></i>
             </button>
         </div>
+
+        <!-- Perfil de usuario (se muestra al iniciar sesión/registrarse) -->
+        <div class="user-profile" id="userProfile">
+            <div class="avatar" id="userAvatar">A</div>
+            <div class="user-name" id="userName">Usuario</div>
+            <div class="user-email" id="userEmail">usuario@email.com</div>
+            <div>
+                <span class="user-status" id="userStatus">Free</span>
+                <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt" style="margin-right:6px;"></i>Cerrar sesión</button>
+            </div>
+        </div>
+
         <div class="menu-items">
             <button class="menu-item active" id="authMenuItem">
-                <i class="fas fa-user-circle"></i> Iniciar sesión / Registrarse
+                <i class="fas fa-user-circle"></i> <span id="authMenuText">Iniciar sesión / Registrarse</span>
             </button>
         </div>
         <div class="menu-footer">
             <i class="fas fa-circle" style="font-size: 0.3rem; color: #333;"></i>
-            v2.5 · 2026
+            v2.6 · 2026
         </div>
     </nav>
 
-    <!-- ===== MODAL AUTH CON reCAPTCHA ===== -->
+    <!-- ===== MODAL AUTH ===== -->
     <div class="auth-modal" id="authModal">
         <button class="close-modal" id="closeAuthModal"><i class="fas fa-times"></i></button>
         <h2 id="authTitle">Iniciar sesión</h2>
         <p class="sub" id="authSub">Ingresa tus credenciales para acceder</p>
 
         <form id="authForm">
-            <!-- Correo -->
             <label for="authEmail">Correo electrónico</label>
             <input type="email" id="authEmail" placeholder="tu@email.com" required>
 
-            <!-- Usuario (solo registro) -->
             <div id="usernameField" style="display:none;">
                 <label for="authUsername">Usuario</label>
                 <input type="text" id="authUsername" placeholder="Elige un nombre de usuario">
             </div>
 
-            <!-- Contraseña -->
             <label for="authPassword">Contraseña</label>
             <input type="password" id="authPassword" placeholder="••••••••" required>
 
-            <!-- Confirmar contraseña (solo registro) -->
             <div id="confirmField" style="display:none;">
                 <label for="authConfirm">Confirmar contraseña</label>
                 <input type="password" id="authConfirm" placeholder="Repite tu contraseña">
             </div>
 
-            <!-- Google reCAPTCHA -->
             <div class="recaptcha-wrapper">
                 <div class="g-recaptcha" data-sitekey="6LdewWAtAAAAAMKhjZxEyc0fHzNWZydjsrbU_wGG"></div>
             </div>
@@ -989,42 +1067,90 @@
             <i class="fas fa-circle" style="font-size: 0.4rem;"></i>
             <span>Aqirax · 2026</span>
             <i class="fas fa-circle" style="font-size: 0.4rem;"></i>
-            <span style="color: #2a2a2a;">v2.5</span>
+            <span style="color: #2a2a2a;">v2.6</span>
         </div>
     </div>
 
     <script>
         // ===================================================
-        // 1. BLOQUEAR CLICK DERECHO, F12, ETC.
+        // 1. BLOQUEAR CLICK DERECHO con mensaje "Próximamente"
         // ===================================================
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
-            alert('⚠️ Fuera de servicio');
+            // Mostrar un cuadro personalizado "Próximamente"
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                        position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+                        background: #1a1a1a; color: #f0f0f0; padding: 1rem 2rem;
+                        border-radius: 16px; border: 1px solid #333;
+                        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+                        font-size: 1.1rem; font-weight: 500; z-index: 9999;
+                        animation: fadeInUp 0.3s ease;
+                        font-family: 'Inter', sans-serif;
+                    `;
+            toast.innerHTML = '<i class="fas fa-clock" style="margin-right: 12px; color: #7aa9ff;"></i> Próximamente';
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.4s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 2000);
             return false;
         });
 
+        // Añadir keyframe para animación
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+                    @keyframes fadeInUp {
+                        from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+                    }
+                `;
+        document.head.appendChild(styleSheet);
+
+        // Bloquear F12, etc.
         document.addEventListener('keydown', function(e) {
             if (e.key === 'F12' || e.keyCode === 123) {
                 e.preventDefault();
-                alert('⚠️ Fuera de servicio');
+                mostrarProximamente();
                 return false;
             }
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'i' || e.key === 'j')) {
                 e.preventDefault();
-                alert('⚠️ Fuera de servicio');
+                mostrarProximamente();
                 return false;
             }
             if (e.ctrlKey && e.key === 'u') {
                 e.preventDefault();
-                alert('⚠️ Fuera de servicio');
+                mostrarProximamente();
                 return false;
             }
             if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
                 e.preventDefault();
-                alert('⚠️ Fuera de servicio');
+                mostrarProximamente();
                 return false;
             }
         });
+
+        function mostrarProximamente() {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                        position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+                        background: #1a1a1a; color: #f0f0f0; padding: 1rem 2rem;
+                        border-radius: 16px; border: 1px solid #333;
+                        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+                        font-size: 1.1rem; font-weight: 500; z-index: 9999;
+                        animation: fadeInUp 0.3s ease;
+                        font-family: 'Inter', sans-serif;
+                    `;
+            toast.innerHTML = '<i class="fas fa-clock" style="margin-right: 12px; color: #7aa9ff;"></i> Próximamente';
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.4s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 2000);
+        }
 
         // ===================================================
         // 2. INICIALIZAR EMAILJS
@@ -1070,6 +1196,7 @@
         let isLoginMode = true;
         let registeredUsers = JSON.parse(localStorage.getItem('aqirax_users')) || {};
         let currentUser = null;
+        let currentUserData = null;
 
         // ===================================================
         // 5. DOM ELEMENTS
@@ -1082,6 +1209,14 @@
         const overlay = document.getElementById('overlay');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
         const authMenuItem = document.getElementById('authMenuItem');
+        const authMenuText = document.getElementById('authMenuText');
+
+        const userProfile = document.getElementById('userProfile');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+        const userStatus = document.getElementById('userStatus');
+        const logoutBtn = document.getElementById('logoutBtn');
 
         const authModal = document.getElementById('authModal');
         const closeAuthModal = document.getElementById('closeAuthModal');
@@ -1116,7 +1251,47 @@
         }, 3000);
 
         // ===================================================
-        // 7. MENÚ LATERAL
+        // 7. FUNCIONES DE PERFIL
+        // ===================================================
+        function updateUserProfile(user, data) {
+            if (user && data) {
+                userProfile.classList.add('show');
+                const initial = user.charAt(0).toUpperCase();
+                userAvatar.textContent = initial;
+                userName.textContent = user;
+                userEmail.textContent = data.email;
+                userStatus.textContent = data.status || 'Free';
+                authMenuText.textContent = user + ' (Free)';
+                currentUser = user;
+                currentUserData = data;
+            } else {
+                userProfile.classList.remove('show');
+                authMenuText.textContent = 'Iniciar sesión / Registrarse';
+                currentUser = null;
+                currentUserData = null;
+            }
+        }
+
+        function checkSession() {
+            const savedUser = localStorage.getItem('aqirax_current_user');
+            if (savedUser && registeredUsers[savedUser]) {
+                updateUserProfile(savedUser, registeredUsers[savedUser]);
+            } else {
+                updateUserProfile(null, null);
+                localStorage.removeItem('aqirax_current_user');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('aqirax_current_user');
+            updateUserProfile(null, null);
+            if (typeof grecaptcha !== 'undefined') {
+                grecaptcha.reset();
+            }
+        }
+
+        // ===================================================
+        // 8. MENÚ LATERAL
         // ===================================================
         function openMenu() {
             sideMenu.classList.add('open');
@@ -1144,14 +1319,13 @@
         });
 
         // ===================================================
-        // 8. MODAL AUTH
+        // 9. MODAL AUTH
         // ===================================================
         function openAuthModal() {
             authModal.classList.add('open');
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             resetAuthForm();
-            // Resetear reCAPTCHA
             if (typeof grecaptcha !== 'undefined') {
                 grecaptcha.reset();
             }
@@ -1221,7 +1395,7 @@
         });
 
         // ===================================================
-        // 9. TOGGLE LOGIN / REGISTRO
+        // 10. TOGGLE LOGIN / REGISTRO
         // ===================================================
         toggleAuthMode.addEventListener('click', () => {
             isLoginMode = !isLoginMode;
@@ -1233,12 +1407,11 @@
         });
 
         // ===================================================
-        // 10. ENVIAR CÓDIGO CON VALIDACIÓN DE reCAPTCHA
+        // 11. ENVIAR CÓDIGO
         // ===================================================
         authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Validar reCAPTCHA
             const recaptchaResponse = grecaptcha.getResponse();
             if (!recaptchaResponse) {
                 errorMsg.textContent = '❌ Por favor, completa el reCAPTCHA.';
@@ -1303,6 +1476,7 @@
                     return;
                 }
                 currentUser = foundUser;
+                currentUserData = registeredUsers[foundUser];
             }
 
             currentCode = generarCodigo();
@@ -1328,7 +1502,7 @@
         });
 
         // ===================================================
-        // 11. REENVIAR CÓDIGO
+        // 12. REENVIAR CÓDIGO
         // ===================================================
         resendBtn.addEventListener('click', async () => {
             if (!currentEmail) {
@@ -1358,7 +1532,7 @@
         });
 
         // ===================================================
-        // 12. VERIFICAR CÓDIGO (inputs automáticos)
+        // 13. VERIFICAR CÓDIGO
         // ===================================================
         codeInputs.forEach((input, index) => {
             input.addEventListener('input', (e) => {
@@ -1397,9 +1571,6 @@
             });
         });
 
-        // ===================================================
-        // 13. VERIFICAR CÓDIGO Y COMPLETAR REGISTRO/LOGIN
-        // ===================================================
         function verifyCode() {
             let entered = '';
             codeInputs.forEach(inp => entered += inp.value);
@@ -1413,12 +1584,20 @@
 
             if (entered === currentCode) {
                 if (isLoginMode) {
-                    successMsg.textContent = '✅ ¡Bienvenido de nuevo, ' + currentUser + '! (Status: Free)';
-                    successMsg.classList.add('show');
-                    setTimeout(() => {
-                        closeAuthModalFunc();
-                    }, 2000);
+                    // Login exitoso
+                    if (currentUser && currentUserData) {
+                        localStorage.setItem('aqirax_current_user', currentUser);
+                        updateUserProfile(currentUser, currentUserData);
+                        successMsg.textContent = '✅ ¡Bienvenido de nuevo, ' + currentUser + '! (Status: Free)';
+                        successMsg.classList.add('show');
+                        setTimeout(() => {
+                            closeAuthModalFunc();
+                            // Actualizar el menú
+                            checkSession();
+                        }, 1500);
+                    }
                 } else {
+                    // Registro
                     const username = authUsername.value.trim();
                     const email = authEmail.value.trim();
                     const password = authPassword.value;
@@ -1430,12 +1609,15 @@
                         registeredAt: new Date().toISOString()
                     };
                     localStorage.setItem('aqirax_users', JSON.stringify(registeredUsers));
+                    localStorage.setItem('aqirax_current_user', username);
 
+                    updateUserProfile(username, registeredUsers[username]);
                     successMsg.textContent = '✅ ¡Registro completado! Usuario: ' + username + ' (Status: Free)';
                     successMsg.classList.add('show');
                     setTimeout(() => {
                         closeAuthModalFunc();
-                    }, 2500);
+                        checkSession();
+                    }, 2000);
                 }
             } else {
                 errorMsg.textContent = '❌ Código incorrecto. Intenta de nuevo.';
@@ -1448,7 +1630,36 @@
         verifyBtn.addEventListener('click', verifyCode);
 
         // ===================================================
-        // 14. PANEL NOTICIAS: + ↔ X
+        // 14. LOGOUT
+        // ===================================================
+        logoutBtn.addEventListener('click', () => {
+            logout();
+            // Cerrar menú si está abierto
+            if (sideMenu.classList.contains('open')) {
+                closeMenu();
+            }
+            // Mostrar mensaje
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                        position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+                        background: #1a1a1a; color: #f0f0f0; padding: 0.8rem 2rem;
+                        border-radius: 16px; border: 1px solid #333;
+                        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+                        font-size: 1rem; z-index: 9999;
+                        animation: fadeInUp 0.3s ease;
+                        font-family: 'Inter', sans-serif;
+                    `;
+            toast.innerHTML = '<i class="fas fa-sign-out-alt" style="margin-right: 12px; color: #ff6b6b;"></i> Sesión cerrada';
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.4s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 2000);
+        });
+
+        // ===================================================
+        // 15. PANEL NOTICIAS: + ↔ X
         // ===================================================
         function toggleNewsPanel() {
             newsContent.classList.toggle('open');
@@ -1462,9 +1673,10 @@
         newsHeader.addEventListener('click', toggleNewsPanel);
 
         // ===================================================
-        // 15. INICIALIZAR
+        // 16. INICIALIZAR - Verificar sesión al cargar
         // ===================================================
-        console.log('✅ Aqirax v2.5 - reCAPTCHA integrado');
+        checkSession();
+        console.log('✅ Aqirax v2.6 - Perfil en menú lateral');
     </script>
 
 </body>
