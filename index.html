@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aqirax AI · sin límites</title>
+    <!-- Favicon usando logo.png -->
+    <link rel="icon" type="image/png" href="logo.png" />
+    <link rel="shortcut icon" type="image/png" href="logo.png" />
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <!-- EmailJS -->
@@ -670,6 +673,69 @@
 
         .menu-item.link-item:hover i {
             color: #8a9aaa;
+        }
+
+        /* Sección Support */
+        .menu-support {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 0.8rem 1rem;
+            margin-top: 0.2rem;
+        }
+
+        .menu-support .support-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #a0a0a0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-support .support-title i {
+            color: #6a8a9a;
+            font-size: 0.9rem;
+        }
+
+        .menu-support .support-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.3rem 0;
+            color: #7a7a7a;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-family: inherit;
+            border: none;
+            background: transparent;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 6px;
+            padding: 0.3rem 0.5rem;
+        }
+
+        .menu-support .support-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #c0c0c0;
+        }
+
+        .menu-support .support-item i {
+            width: 18px;
+            color: #4a5a6a;
+            font-size: 0.8rem;
+        }
+
+        .menu-support .support-item:hover i {
+            color: #7a8a9a;
+        }
+
+        .menu-support .support-item .support-label {
+            opacity: 0.6;
+            font-size: 0.7rem;
+            margin-left: auto;
         }
 
         .menu-divider {
@@ -1667,6 +1733,9 @@
                 font-size: 0.8rem;
                 padding: 0.5rem 0.9rem;
             }
+            .menu-support .support-item {
+                font-size: 0.7rem;
+            }
         }
 
         .menu-overlay {
@@ -2019,6 +2088,31 @@
             </button>
         </div>
 
+        <!-- Sección SUPPORT -->
+        <div class="menu-section">
+            <div class="menu-support">
+                <div class="support-title">
+                    <i class="fas fa-headset"></i>
+                    <span>Soporte</span>
+                </div>
+                <button class="support-item" onclick="window.location.href='mailto:aqirax.ai@gmail.com'">
+                    <i class="fas fa-envelope"></i>
+                    aqirax.ai@gmail.com
+                    <span class="support-label">Email</span>
+                </button>
+                <button class="support-item" onclick="window.open('https://aqirax.net/support', '_blank')">
+                    <i class="fas fa-globe"></i>
+                    aqirax.net/support
+                    <span class="support-label">Web</span>
+                </button>
+                <button class="support-item" onclick="window.open('https://aqirax.com/support', '_blank')">
+                    <i class="fas fa-link"></i>
+                    aqirax.com/support
+                    <span class="support-label">Alternativo</span>
+                </button>
+            </div>
+        </div>
+
         <div class="menu-divider"></div>
 
         <div class="menu-section">
@@ -2144,13 +2238,11 @@
         // BLOQUEO DE TECLAS F12 Y HERRAMIENTAS
         // ============================================
         document.addEventListener('keydown', function(e) {
-            // Bloquear F12
             if (e.key === 'F12' || e.keyCode === 123) {
                 e.preventDefault();
                 e.stopPropagation();
                 return false;
             }
-            // Bloquear Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -2161,7 +2253,6 @@
                 e.stopPropagation();
                 return false;
             }
-            // Bloquear Ctrl+Shift+C (inspeccionar elemento)
             if (e.ctrlKey && e.shiftKey && e.key === 'C') {
                 e.preventDefault();
                 e.stopPropagation();
@@ -2169,18 +2260,15 @@
             }
         });
 
-        // Bloquear click derecho en el documento (excepto en áreas permitidas)
         document.addEventListener('contextmenu', function(e) {
-            // Permitir el menú contextual personalizado solo en el área del chat
             const target = e.target;
             if (target.closest('#chatMessages') || target.closest('.chat-wrapper') || target.closest('#main-app')) {
-                return; // Permitir
+                return;
             }
             e.preventDefault();
             return false;
         });
 
-        // Prevenir arrastrar imágenes o elementos
         document.addEventListener('dragstart', function(e) {
             e.preventDefault();
         });
@@ -2777,7 +2865,6 @@
 
                     function typeNextChar() {
                         if (index < chars.length) {
-                            // Insertar el carácter antes del cursor
                             const charNode = document.createTextNode(chars[index]);
                             msgDiv.insertBefore(charNode, cursor);
                             index++;
@@ -2785,7 +2872,6 @@
                             const delay = 15 + Math.random() * 25;
                             typingTimeout = setTimeout(typeNextChar, delay);
                         } else {
-                            // Terminar: remover el cursor
                             cursor.remove();
                             resolve(wrapper);
                         }
@@ -2868,9 +2954,7 @@
                             msgDiv.style.opacity = '0.6';
                             setTimeout(() => {
                                 const newReply = getAIResponse(text);
-                                // Re-renderizar con animación de escritura
                                 const parent = wrapper.parentNode;
-                                const nextSibling = wrapper.nextSibling;
                                 const msgId = wrapper.dataset.msgId;
                                 const timerEl = wrapper.querySelector('.message-timer');
                                 const ts = timerEl ? parseInt(timerEl.dataset.timestamp) : Date.now();
@@ -3023,7 +3107,6 @@
                 const timestamp = Date.now();
 
                 if (sender === 'ai') {
-                    // Para mensajes de IA, usar animación de escritura
                     renderMessageWithTyping(text, sender, msgId, timestamp);
                     return null;
                 } else {
@@ -3178,7 +3261,6 @@
             });
 
             document.addEventListener('contextmenu', function(e) {
-                // Permitir el menú contextual personalizado solo en el área del chat
                 const target = e.target;
                 if (target.closest('#chatMessages') || target.closest('.chat-wrapper') || target.closest(
                     '#main-app')) {
@@ -3833,7 +3915,7 @@
 
             initSpeech();
 
-            console.log('🚀 Aqirax AI · Animación de escritura · F12 bloqueado · Banderas emoji');
+            console.log('🚀 Aqirax AI · Support en menú · Favicon configurado');
             console.log('📁 Asegúrate de que logo.png, faq.html y tos.html estén en la misma carpeta.');
         })();
     </script>
