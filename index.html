@@ -1993,15 +1993,15 @@
 
             const WELCOME_TEXT = 'Hola, ¿Cómo puedo ayudarte hoy?';
             const PLACEHOLDER_TEXTS = ['Investiga', 'Aprende', 'Innova', 'Supera', 'Crea'];
-            const BACKEND_URL = 'https://api.aqirax.com/api/chat';
+            const BACKEND_URL = 'https://bakendi-production.up.railway.app/api/chat';
 
-            // Inicializar estado del video de fondo
+            
             bgVideoToggle.checked = bgVideoEnabled;
             if (!bgVideoEnabled) {
                 bgVideo.style.display = 'none';
             }
 
-            // Toggle para video de fondo
+            
             bgVideoToggle.addEventListener('change', function () {
                 bgVideoEnabled = this.checked;
                 localStorage.setItem('aqirax_bg_video', bgVideoEnabled);
@@ -2012,7 +2012,7 @@
                 }
             });
 
-            // Función para animar el placeholder
+            
             function animatePlaceholder(textarea) {
                 let textIndex = 0;
                 let charIndex = 0;
@@ -2075,7 +2075,7 @@
                 });
             }
 
-            // Función para crear botones de acción en mensajes de IA
+            
             function createMessageActions(messageDiv, content) {
                 const actionsDiv = document.createElement('div');
                 actionsDiv.className = 'message-actions';
