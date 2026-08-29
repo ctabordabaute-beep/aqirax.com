@@ -2199,7 +2199,6 @@
 
 
             function renderMarkdown(text) {
-
                 const codeBlocks = [];
                 let processedText = text.replace(/```(\w+)?\n([\s\S]*?)```/g, function (match, lang, code) {
                     const index = codeBlocks.length;
@@ -2207,14 +2206,12 @@
                     return `\n[CODE_BLOCK_${index}]\n`;
                 });
 
-
                 processedText = processedText.replace(/\n( {4}|\t)([^\n]+(?:\n( {4}|\t)[^\n]+)*)/g, function (match, indent, code) {
                     const cleanCode = match.split('\n').map(line => line.replace(/^( {4}|\t)/, '')).join('\n');
                     const index = codeBlocks.length;
                     codeBlocks.push({ code: cleanCode.trim(), language: detectLanguage(cleanCode.trim()) });
                     return `\n[CODE_BLOCK_${index}]\n`;
                 });
-
 
                 let html = processedText
                     .replace(/&/g, '&amp;')
@@ -2228,17 +2225,14 @@
                 html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
                 html = html.replace(/\n/g, '<br>');
 
-
                 codeBlocks.forEach((block, index) => {
                     const placeholder = `[CODE_BLOCK_${index}]`;
                     const codeBlockHtml = createCodeBlock(block.code, block.language).outerHTML;
                     html = html.replace(placeholder, codeBlockHtml);
                 });
 
-
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = html;
-
 
                 tempDiv.querySelectorAll('*').forEach(el => {
                     if (el.textContent && el.textContent.includes('[CODE_BLOCK_')) {
@@ -2754,7 +2748,6 @@
                                 setTimeout(typeNext, 5);
                             }
                         } else if (node.nodeType === Node.ELEMENT_NODE) {
-
                             if (node.classList && node.classList.contains('code-block-wrapper')) {
                                 bubble.appendChild(node.cloneNode(true));
                                 nodeIndex++;
@@ -2858,7 +2851,6 @@
                 const timeoutId = setTimeout(() => controller.abort(), 30000);
 
                 try {
-
                     const messages = [
                         { role: 'system', content: SYSTEM_PROMPT },
                         ...conversation.slice(-10).map(msg => ({
@@ -2890,7 +2882,6 @@
 
                     const data = await response.json();
 
-
                     if (data.response) {
                         return data.response;
                     } else if (data.message) {
@@ -2921,7 +2912,6 @@
 
                 fixedSendBtn.disabled = true;
                 fixedSendBtn.style.opacity = '0.5';
-
 
                 if (!currentChatUUID) {
                     currentChatUUID = generateUUID();
