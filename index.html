@@ -13,6 +13,8 @@
         href="https://fonts.googleapis.com/css2?family=Anta&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -39,6 +41,10 @@
             z-index: 0;
         }
 
+        #bg-video.hidden {
+            display: none;
+        }
+
         .chat-full {
             display: flex;
             flex-direction: column;
@@ -47,7 +53,11 @@
             position: relative;
             z-index: 1;
             color: #e8e8e8;
-            background: transparent;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-full.no-video {
+            background: #0c0c0c;
         }
 
         .chat-header {
@@ -63,7 +73,7 @@
         }
 
         .chat-header .logo {
-            height: 50px;
+            height: 55px;
             width: auto;
             display: block;
             filter: drop-shadow(0 2px 16px rgba(0, 0, 0, 0.6));
@@ -644,49 +654,37 @@
             font-size: 0.85rem;
         }
 
+        /* Toggle Switch */
         .toggle-switch {
             position: relative;
-            display: inline-block;
             width: 50px;
             height: 26px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 13px;
             cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: .4s;
-            border-radius: 34px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .toggle-slider:before {
+        .toggle-switch.active {
+            background: rgba(167, 139, 250, 0.4);
+            border-color: rgba(167, 139, 250, 0.4);
+        }
+
+        .toggle-switch .toggle-knob {
             position: absolute;
-            content: "";
-            height: 20px;
+            top: 2px;
+            left: 2px;
             width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
+            height: 20px;
+            background: #ffffff;
             border-radius: 50%;
+            transition: 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .toggle-switch input:checked+.toggle-slider {
-            background-color: #a78bfa;
-        }
-
-        .toggle-switch input:checked+.toggle-slider:before {
-            transform: translateX(24px);
+        .toggle-switch.active .toggle-knob {
+            left: 26px;
         }
 
         .search-modal {
@@ -1192,6 +1190,82 @@
             color: #10b981;
         }
 
+        /* Code block styles */
+        .code-block-wrapper {
+            position: relative;
+            margin: 0.5rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #1e1e1e;
+        }
+
+        .code-block-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+            background: #2d2d2d;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-block-header .code-language {
+            font-size: 0.75rem;
+            color: #858585;
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .code-block-header .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .code-block-header .code-actions button {
+            background: transparent;
+            border: none;
+            color: #858585;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 6px;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .code-block-header .code-actions button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .code-block-header .code-actions button.copied {
+            color: #10b981;
+        }
+
+        .code-block-content {
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .code-block-content pre {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            border: none;
+        }
+
+        .code-block-content code {
+            background: transparent;
+            padding: 0;
+            font-size: inherit;
+        }
+
         .typing-indicator {
             display: none;
             align-items: center;
@@ -1293,7 +1367,7 @@
 
         .welcome-char {
             display: inline-block;
-            animation: charWave 2.5s ease-in-out infinite;
+            animation: charWave 1.8s ease-in-out infinite;
             transform-origin: center bottom;
             will-change: transform;
         }
@@ -1325,7 +1399,7 @@
         }
 
         .welcome-wrapper {
-            animation: floatWrapper 5s ease-in-out infinite;
+            animation: floatWrapper 4s ease-in-out infinite;
         }
 
         @keyframes floatWrapper {
@@ -1465,8 +1539,7 @@
         }
 
         .input-wrapper .btn-group .send-btn {
-            background: rgba(45, 45, 63, 0.8);
-            backdrop-filter: blur(4px);
+            background: rgba(255, 255, 255, 0.15);
             border: none;
             color: white;
             width: 40px;
@@ -1483,7 +1556,7 @@
         }
 
         .input-wrapper .btn-group .send-btn:hover {
-            background: rgba(61, 61, 79, 0.9);
+            background: rgba(255, 255, 255, 0.25);
             transform: scale(0.96);
         }
 
@@ -1742,6 +1815,15 @@
                 height: 28px;
                 font-size: 0.8rem;
             }
+
+            .code-block-content {
+                font-size: 0.75rem;
+            }
+
+            .code-block-header .code-actions button {
+                font-size: 0.8rem;
+                padding: 0.2rem 0.4rem;
+            }
         }
     </style>
 </head>
@@ -1751,10 +1833,10 @@
         <source src="bg.mp4" type="video/mp4" />
     </video>
 
-   
+
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    
+
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <img src="logo.png" alt="Aqirax" class="sidebar-logo" />
@@ -1781,7 +1863,7 @@
         </div>
     </div>
 
-    
+
     <div class="osint-modal" id="osintModal">
         <div class="osint-modal-content">
             <div class="osint-icon"><i class="fas fa-eye"></i></div>
@@ -1816,10 +1898,9 @@
                 <div class="tab-panel active" id="tabConfig">
                     <div class="setting-item">
                         <span class="setting-label"><i class="fas fa-video"></i> Video de fondo</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="bgVideoToggle" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
+                        <div class="toggle-switch active" id="videoToggle">
+                            <div class="toggle-knob"></div>
+                        </div>
                     </div>
                     <div class="setting-item">
                         <span class="setting-label"><i class="fas fa-sign-in-alt"></i> Login / Registrarse</span>
@@ -1886,7 +1967,7 @@
                     <div class="contact-item"><span class="contact-label"><i class="fab fa-discord"></i>
                             Discord</span><span class="contact-value">discord.gg/fapSGJQUE</span></div>
                     <div class="contact-item"><span class="contact-label"><i class="fas fa-globe"></i> Web</span><span
-                            class="contact-value">aqirax.net/support</span></div>
+                            class="contact-value">aqirax.com/support</span></div>
                 </div>
             </div>
         </div>
@@ -1934,7 +2015,7 @@
                         <button class="mic-btn" id="micBtnFixed" aria-label="Usar micrófono"
                             title="Hablar para escribir"><i class="fas fa-microphone"></i></button>
                         <button class="send-btn" id="sendBtnFixed" aria-label="Enviar mensaje"><i
-                                class="fas fa-paper-plane"></i></button>
+                                class="fas fa-arrow-up"></i></button>
                     </div>
                 </div>
                 <div class="input-bottom-row">
@@ -1956,7 +2037,8 @@
             const deepBtn = document.getElementById('deepBtnFixed');
             const chatFooter = document.getElementById('chatFooter');
             const bgVideo = document.getElementById('bg-video');
-            const bgVideoToggle = document.getElementById('bgVideoToggle');
+            const chatFull = document.querySelector('.chat-full');
+            const videoToggle = document.getElementById('videoToggle');
 
             const sidebar = document.getElementById('sidebar');
             const sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -1988,31 +2070,193 @@
             let deepThinkMode = false;
             let chatHistory = JSON.parse(localStorage.getItem('aqirax_chat_history')) || [];
             let currentChatId = null;
+            let currentChatUUID = null;
             let isProcessing = false;
-            let bgVideoEnabled = localStorage.getItem('aqirax_bg_video') !== 'false';
+            let videoEnabled = true;
 
             const WELCOME_TEXT = 'Hola, ¿Cómo puedo ayudarte hoy?';
+            const API_URL = 'https://bakendi-production.up.railway.app/api/chat';
+            const SYSTEM_PROMPT = 'Eres Aqirax, una IA desarrollada por aqirax ai, un modelo inteligente y capaz, muy amigable y astuto.';
             const PLACEHOLDER_TEXTS = ['Investiga', 'Aprende', 'Innova', 'Supera', 'Crea'];
-            const BACKEND_URL = 'https://bakendi-production.up.railway.app/api/chat';
 
-            
-            bgVideoToggle.checked = bgVideoEnabled;
-            if (!bgVideoEnabled) {
-                bgVideo.style.display = 'none';
+
+            function generateUUID() {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+                let uuid = '';
+                for (let i = 0; i < 15; i++) {
+                    uuid += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return uuid;
             }
 
-            
-            bgVideoToggle.addEventListener('change', function () {
-                bgVideoEnabled = this.checked;
-                localStorage.setItem('aqirax_bg_video', bgVideoEnabled);
-                if (bgVideoEnabled) {
-                    bgVideo.style.display = 'block';
+
+            function updateURL(uuid) {
+                if (uuid) {
+                    const newUrl = `https://aqirax.com/c/${uuid}`;
+                    window.history.pushState({ uuid: uuid }, '', newUrl);
+                }
+            }
+
+
+            videoToggle.addEventListener('click', function () {
+                videoEnabled = !videoEnabled;
+                this.classList.toggle('active', videoEnabled);
+                if (videoEnabled) {
+                    bgVideo.classList.remove('hidden');
+                    chatFull.classList.remove('no-video');
+                    bgVideo.play().catch(e => console.log('Error al reproducir video:', e));
                 } else {
-                    bgVideo.style.display = 'none';
+                    bgVideo.classList.add('hidden');
+                    chatFull.classList.add('no-video');
+                    bgVideo.pause();
                 }
             });
 
-            
+
+            function detectLanguage(code) {
+                if (code.includes('const') || code.includes('let') || code.includes('function') || code.includes('=>') || code.includes('document.')) return 'javascript';
+                if (code.includes('def ') || code.includes('import ') || code.includes('print(') || code.includes('class ')) return 'python';
+                if (code.includes('<?php')) return 'php';
+                if (code.includes('<!DOCTYPE') || code.includes('<html') || code.includes('<div')) return 'html';
+                if (code.includes('{') && code.includes('}') && code.includes(':') && code.includes(';') && code.includes('#')) return 'css';
+                if (code.includes('SELECT') || code.includes('INSERT') || code.includes('UPDATE') || code.includes('DELETE')) return 'sql';
+                if (code.includes('#!/bin/bash') || code.includes('echo ')) return 'bash';
+                if (code.includes('public class') || code.includes('System.out')) return 'java';
+                if (code.includes('using System') || code.includes('namespace ')) return 'csharp';
+                if (code.includes('package ') || code.includes('func ')) return 'go';
+                return 'plaintext';
+            }
+
+
+            function createCodeBlock(code, language) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+
+                const header = document.createElement('div');
+                header.className = 'code-block-header';
+
+                const langLabel = document.createElement('span');
+                langLabel.className = 'code-language';
+                langLabel.textContent = language;
+
+                const actions = document.createElement('div');
+                actions.className = 'code-actions';
+
+                const copyBtn = document.createElement('button');
+                copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copiar';
+                copyBtn.addEventListener('click', async function () {
+                    try {
+                        await navigator.clipboard.writeText(code);
+                        this.classList.add('copied');
+                        this.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                        setTimeout(() => {
+                            this.classList.remove('copied');
+                            this.innerHTML = '<i class="fas fa-copy"></i> Copiar';
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Error al copiar:', err);
+                    }
+                });
+
+                const downloadBtn = document.createElement('button');
+                downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar';
+                downloadBtn.addEventListener('click', function () {
+                    const blob = new Blob([code], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `codigo.${language === 'javascript' ? 'js' : language === 'python' ? 'py' : language === 'html' ? 'html' : language === 'css' ? 'css' : 'txt'}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                });
+
+                actions.appendChild(copyBtn);
+                actions.appendChild(downloadBtn);
+                header.appendChild(langLabel);
+                header.appendChild(actions);
+
+                const content = document.createElement('div');
+                content.className = 'code-block-content';
+                const pre = document.createElement('pre');
+                const codeElement = document.createElement('code');
+                codeElement.className = `language-${language}`;
+                codeElement.textContent = code;
+                pre.appendChild(codeElement);
+                content.appendChild(pre);
+
+                wrapper.appendChild(header);
+                wrapper.appendChild(content);
+
+
+                if (typeof hljs !== 'undefined') {
+                    hljs.highlightElement(codeElement);
+                }
+
+                return wrapper;
+            }
+
+
+            function renderMarkdown(text) {
+
+                const codeBlocks = [];
+                let processedText = text.replace(/```(\w+)?\n([\s\S]*?)```/g, function (match, lang, code) {
+                    const index = codeBlocks.length;
+                    codeBlocks.push({ code: code.trim(), language: lang || detectLanguage(code.trim()) });
+                    return `\n[CODE_BLOCK_${index}]\n`;
+                });
+
+
+                processedText = processedText.replace(/\n( {4}|\t)([^\n]+(?:\n( {4}|\t)[^\n]+)*)/g, function (match, indent, code) {
+                    const cleanCode = match.split('\n').map(line => line.replace(/^( {4}|\t)/, '')).join('\n');
+                    const index = codeBlocks.length;
+                    codeBlocks.push({ code: cleanCode.trim(), language: detectLanguage(cleanCode.trim()) });
+                    return `\n[CODE_BLOCK_${index}]\n`;
+                });
+
+
+                let html = processedText
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+
+                html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+                html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+                html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+                html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+                html = html.replace(/\n/g, '<br>');
+
+
+                codeBlocks.forEach((block, index) => {
+                    const placeholder = `[CODE_BLOCK_${index}]`;
+                    const codeBlockHtml = createCodeBlock(block.code, block.language).outerHTML;
+                    html = html.replace(placeholder, codeBlockHtml);
+                });
+
+
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+
+
+                tempDiv.querySelectorAll('*').forEach(el => {
+                    if (el.textContent && el.textContent.includes('[CODE_BLOCK_')) {
+                        const match = el.textContent.match(/\[CODE_BLOCK_(\d+)\]/);
+                        if (match) {
+                            const index = parseInt(match[1]);
+                            if (codeBlocks[index]) {
+                                const codeBlock = createCodeBlock(codeBlocks[index].code, codeBlocks[index].language);
+                                el.replaceWith(codeBlock);
+                            }
+                        }
+                    }
+                });
+
+                return tempDiv.innerHTML;
+            }
+
+
             function animatePlaceholder(textarea) {
                 let textIndex = 0;
                 let charIndex = 0;
@@ -2075,7 +2319,7 @@
                 });
             }
 
-            
+
             function createMessageActions(messageDiv, content) {
                 const actionsDiv = document.createElement('div');
                 actionsDiv.className = 'message-actions';
@@ -2164,6 +2408,7 @@
                 updateHistoryList();
                 if (currentChatId === chatId) {
                     currentChatId = Date.now().toString();
+                    currentChatUUID = null;
                     conversation = [];
                     messagesContainer.innerHTML = '';
                     hasMessages = false;
@@ -2178,6 +2423,7 @@
                 const chat = chatHistory.find(c => c.id === chatId);
                 if (!chat) return;
                 currentChatId = chatId;
+                currentChatUUID = chat.uuid || null;
                 conversation = chat.messages || [];
                 messagesContainer.innerHTML = '';
                 if (conversation.length === 0) {
@@ -2192,6 +2438,9 @@
                     fixedInputArea.classList.add('visible');
                     chatFooter.classList.add('visible');
                     conversation.forEach(msg => renderMessage(msg.role, msg.content, true));
+                    if (currentChatUUID) {
+                        updateURL(currentChatUUID);
+                    }
                 }
                 saveHistory();
                 updateHistoryList();
@@ -2203,12 +2452,14 @@
                 if (existing) {
                     existing.messages = conversation;
                     existing.updatedAt = Date.now();
+                    existing.uuid = currentChatUUID;
                     if (existing.title === 'Nuevo chat' && conversation.length > 0) {
                         existing.title = conversation[0]?.content?.substring(0, 30) || 'Nuevo chat';
                     }
                 } else {
                     chatHistory.push({
                         id: currentChatId,
+                        uuid: currentChatUUID,
                         title: conversation[0]?.content?.substring(0, 30) || 'Nuevo chat',
                         messages: conversation,
                         createdAt: Date.now(),
@@ -2251,6 +2502,7 @@
             function resetChat() {
                 if (conversation.length > 0) saveCurrentChat();
                 currentChatId = Date.now().toString();
+                currentChatUUID = null;
                 conversation = [];
                 messagesContainer.innerHTML = '';
                 hasMessages = false;
@@ -2448,21 +2700,6 @@
                 if (indicator) indicator.classList.remove('visible');
             }
 
-            function renderMarkdown(text) {
-                let html = text
-                    .replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;');
-
-                html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-                html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-                html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
-                html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                html = html.replace(/\n/g, '<br>');
-
-                return html;
-            }
-
             function typeMessage(content, callback) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = 'message ai';
@@ -2490,7 +2727,7 @@
                 const fullHtml = renderMarkdown(content);
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = fullHtml;
-                const nodes = tempDiv.childNodes;
+                const nodes = Array.from(tempDiv.childNodes);
 
                 let nodeIndex = 0;
                 let charIndex = 0;
@@ -2517,82 +2754,89 @@
                                 setTimeout(typeNext, 5);
                             }
                         } else if (node.nodeType === Node.ELEMENT_NODE) {
-                            const clone = node.cloneNode(false);
-                            bubble.appendChild(clone);
-                            const childNodes = Array.from(node.childNodes);
-                            let childIndex = 0;
-                            let childElement = clone;
 
-                            function typeChild() {
-                                if (childIndex < childNodes.length) {
-                                    const child = childNodes[childIndex];
-                                    if (child.nodeType === Node.TEXT_NODE) {
-                                        const text = child.textContent;
-                                        let charIdx = 0;
-                                        const textNode = document.createTextNode('');
-                                        childElement.appendChild(textNode);
+                            if (node.classList && node.classList.contains('code-block-wrapper')) {
+                                bubble.appendChild(node.cloneNode(true));
+                                nodeIndex++;
+                                setTimeout(typeNext, 10);
+                            } else {
+                                const clone = node.cloneNode(false);
+                                bubble.appendChild(clone);
+                                const childNodes = Array.from(node.childNodes);
+                                let childIndex = 0;
+                                let childElement = clone;
 
-                                        function typeText() {
-                                            if (charIdx < text.length) {
-                                                textNode.textContent += text.charAt(charIdx);
-                                                charIdx++;
-                                                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                                                setTimeout(typeText, 5);
-                                            } else {
-                                                childIndex++;
-                                                setTimeout(typeChild, 5);
-                                            }
-                                        }
-                                        typeText();
-                                    } else if (child.nodeType === Node.ELEMENT_NODE) {
-                                        const childClone = child.cloneNode(false);
-                                        childElement.appendChild(childClone);
-                                        const grandChildren = Array.from(child.childNodes);
-                                        let grandIdx = 0;
+                                function typeChild() {
+                                    if (childIndex < childNodes.length) {
+                                        const child = childNodes[childIndex];
+                                        if (child.nodeType === Node.TEXT_NODE) {
+                                            const text = child.textContent;
+                                            let charIdx = 0;
+                                            const textNode = document.createTextNode('');
+                                            childElement.appendChild(textNode);
 
-                                        function typeGrand() {
-                                            if (grandIdx < grandChildren.length) {
-                                                const gc = grandChildren[grandIdx];
-                                                if (gc.nodeType === Node.TEXT_NODE) {
-                                                    const text = gc.textContent;
-                                                    let charIdx = 0;
-                                                    const textNode = document.createTextNode('');
-                                                    childClone.appendChild(textNode);
-
-                                                    function typeGrandText() {
-                                                        if (charIdx < text.length) {
-                                                            textNode.textContent += text.charAt(charIdx);
-                                                            charIdx++;
-                                                            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                                                            setTimeout(typeGrandText, 5);
-                                                        } else {
-                                                            grandIdx++;
-                                                            setTimeout(typeGrand, 5);
-                                                        }
-                                                    }
-                                                    typeGrandText();
+                                            function typeText() {
+                                                if (charIdx < text.length) {
+                                                    textNode.textContent += text.charAt(charIdx);
+                                                    charIdx++;
+                                                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                                                    setTimeout(typeText, 5);
                                                 } else {
-                                                    grandIdx++;
-                                                    setTimeout(typeGrand, 5);
+                                                    childIndex++;
+                                                    setTimeout(typeChild, 5);
                                                 }
-                                            } else {
-                                                childIndex++;
-                                                setTimeout(typeChild, 5);
                                             }
+                                            typeText();
+                                        } else if (child.nodeType === Node.ELEMENT_NODE) {
+                                            const childClone = child.cloneNode(false);
+                                            childElement.appendChild(childClone);
+                                            const grandChildren = Array.from(child.childNodes);
+                                            let grandIdx = 0;
+
+                                            function typeGrand() {
+                                                if (grandIdx < grandChildren.length) {
+                                                    const gc = grandChildren[grandIdx];
+                                                    if (gc.nodeType === Node.TEXT_NODE) {
+                                                        const text = gc.textContent;
+                                                        let charIdx = 0;
+                                                        const textNode = document.createTextNode('');
+                                                        childClone.appendChild(textNode);
+
+                                                        function typeGrandText() {
+                                                            if (charIdx < text.length) {
+                                                                textNode.textContent += text.charAt(charIdx);
+                                                                charIdx++;
+                                                                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                                                                setTimeout(typeGrandText, 5);
+                                                            } else {
+                                                                grandIdx++;
+                                                                setTimeout(typeGrand, 5);
+                                                            }
+                                                        }
+                                                        typeGrandText();
+                                                    } else {
+                                                        grandIdx++;
+                                                        setTimeout(typeGrand, 5);
+                                                    }
+                                                } else {
+                                                    childIndex++;
+                                                    setTimeout(typeChild, 5);
+                                                }
+                                            }
+                                            typeGrand();
+                                        } else {
+                                            childIndex++;
+                                            setTimeout(typeChild, 5);
                                         }
-                                        typeGrand();
                                     } else {
-                                        childIndex++;
-                                        setTimeout(typeChild, 5);
+                                        nodeIndex++;
+                                        charIndex = 0;
+                                        currentElement = null;
+                                        setTimeout(typeNext, 5);
                                     }
-                                } else {
-                                    nodeIndex++;
-                                    charIndex = 0;
-                                    currentElement = null;
-                                    setTimeout(typeNext, 5);
                                 }
+                                typeChild();
                             }
-                            typeChild();
                         } else {
                             nodeIndex++;
                             setTimeout(typeNext, 5);
@@ -2611,16 +2855,26 @@
 
             async function callAPI(userMessage) {
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 20000);
+                const timeoutId = setTimeout(() => controller.abort(), 30000);
 
                 try {
-                    const response = await fetch(BACKEND_URL, {
+
+                    const messages = [
+                        { role: 'system', content: SYSTEM_PROMPT },
+                        ...conversation.slice(-10).map(msg => ({
+                            role: msg.role,
+                            content: msg.content
+                        })),
+                        { role: 'user', content: userMessage }
+                    ];
+
+                    const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            message: userMessage,
+                            messages: messages,
                             deepThink: deepThinkMode
                         }),
                         signal: controller.signal
@@ -2635,7 +2889,21 @@
                     }
 
                     const data = await response.json();
-                    return data.response || data.content || data.message;
+
+
+                    if (data.response) {
+                        return data.response;
+                    } else if (data.message) {
+                        return data.message;
+                    } else if (data.content) {
+                        return data.content;
+                    } else if (data.choices && data.choices.length > 0) {
+                        return data.choices[0].message.content;
+                    } else if (data.text) {
+                        return data.text;
+                    } else {
+                        throw new Error('Respuesta inesperada de la API');
+                    }
                 } catch (error) {
                     clearTimeout(timeoutId);
                     if (error.name === 'AbortError') {
@@ -2653,6 +2921,12 @@
 
                 fixedSendBtn.disabled = true;
                 fixedSendBtn.style.opacity = '0.5';
+
+
+                if (!currentChatUUID) {
+                    currentChatUUID = generateUUID();
+                    updateURL(currentChatUUID);
+                }
 
                 addUserMessage(text);
                 fixedInput.value = '';
@@ -2695,7 +2969,7 @@
                     const span = document.createElement('span');
                     span.className = 'welcome-char';
                     span.textContent = char === ' ' ? '\u00A0' : char;
-                    const delay = (index * 0.15) % 2.5;
+                    const delay = (index * 0.06) % 1.8;
                     span.style.animationDelay = `${delay}s`;
                     container.appendChild(span);
                 });
@@ -2735,7 +3009,7 @@
                 sendBtnFloat.className = 'send-btn';
                 sendBtnFloat.setAttribute('aria-label', 'Enviar mensaje');
                 sendBtnFloat.id = 'floatingSendBtn';
-                sendBtnFloat.innerHTML = '<i class="fas fa-paper-plane"></i>';
+                sendBtnFloat.innerHTML = '<i class="fas fa-arrow-up"></i>';
 
                 btnGroup.appendChild(micBtnFloat);
                 btnGroup.appendChild(sendBtnFloat);
@@ -2764,8 +3038,15 @@
                 let floatDeepMode = false;
                 deepBtnFloat.addEventListener('click', function () {
                     floatDeepMode = !floatDeepMode;
-                    if (floatDeepMode) { deepBtnFloat.classList.add('active'); deepBtnFloat.title = 'DeepThink activado'; }
-                    else { deepBtnFloat.classList.remove('active'); deepBtnFloat.title = 'Activar modo DeepThink'; }
+                    deepThinkMode = floatDeepMode;
+                    if (floatDeepMode) {
+                        deepBtnFloat.classList.add('active');
+                        deepBtnFloat.title = 'DeepThink activado';
+                    }
+                    else {
+                        deepBtnFloat.classList.remove('active');
+                        deepBtnFloat.title = 'Activar modo DeepThink';
+                    }
                 });
 
                 return wrapper;
@@ -2902,6 +3183,7 @@
 
             function init() {
                 currentChatId = Date.now().toString();
+                currentChatUUID = null;
                 conversation = [];
                 updateHistoryList();
                 renderWelcome();
