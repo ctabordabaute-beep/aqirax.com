@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos de Servicio | AQIRAX AI</title>
+
+
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="shortcut icon" href="logo.png" type="image/png">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Noto+Color+Emoji&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --bg-card: #070707;
+            --bg-elevated: #0e0e0e;
+            --border-subtle: #1f1f1f;
+            --border-hover: #3a3a3a;
+            --text-primary: #f0f0f0;
+            --text-secondary: #c4c4c4;
+            --text-muted: #8a8f98;
+            --accent: #6e6e6e;
+            --accent-glow: #9a9a9a;
+            --danger: #8b3a3a;
+            --danger-bg: #1a0d0d;
+            --radius-xl: 32px;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', 'Noto Color Emoji', 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.75;
+            padding: 2.5rem 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image:
+                radial-gradient(ellipse at 20% 20%, rgba(40, 40, 40, 0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(30, 30, 30, 0.2) 0%, transparent 60%);
+            background-attachment: fixed;
+        }
+
+        .terms-wrapper {
+            max-width: 920px;
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            padding: 3rem 3.2rem 2rem;
+            box-shadow:
+                0 30px 60px -15px rgba(0, 0, 0, 0.95),
+                0 0 0 1px rgba(255, 255, 255, 0.02),
+                0 0 80px rgba(80, 80, 80, 0.03);
+            backdrop-filter: blur(10px);
+            position: relative;
+            transition: border-color 0.4s ease;
+        }
+
+        .terms-wrapper::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: 8%;
+            right: 8%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #4a4a4a, #777, #4a4a4a, transparent);
+            border-radius: 10px;
+        }
+
+        .terms-wrapper::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 25%;
+            right: 25%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #2a2a2a, transparent);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .terms-wrapper {
+                padding: 2rem 1.3rem 1.5rem;
+                border-radius: 22px;
+            }
+
+            body {
+                padding: 1rem 0.6rem;
+            }
+        }
+
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 15px rgba(120, 120, 120, 0.08);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(140, 140, 140, 0.15);
+            }
+        }
+
+        @keyframes logoFloat {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 0.7s ease forwards;
+            opacity: 0;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease forwards;
+            opacity: 0;
+        }
+
+        .animate-slide-left {
+            animation: slideInLeft 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.25s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.55s;
+        }
+
+        .delay-5 {
+            animation-delay: 0.7s;
+        }
+
+        .delay-6 {
+            animation-delay: 0.85s;
+        }
+
+        .delay-7 {
+            animation-delay: 1s;
+        }
+
+
+        .header-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 0.8rem;
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        .logo-img {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+            border-radius: 18px;
+            background: #0a0a0a;
+            border: 1px solid #222;
+            padding: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 20px rgba(100, 100, 100, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.04);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 30px rgba(140, 140, 140, 0.2);
+        }
+
+        .logo-fallback {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #aaa;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            background: linear-gradient(145deg, #ffffff 0%, #b0b0b0 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+            margin: 0;
+            line-height: 1.15;
+        }
+
+        .subhead {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+            margin-bottom: 2.5rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .subhead i {
+            color: #5a5a5a;
+            font-size: 0.8rem;
+        }
+
+
+        .lang-section {
+            margin-bottom: 3.4rem;
+        }
+
+        .lang-title {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            border-left: 6px solid #6e6e6e;
+            padding-left: 1.4rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #111111, transparent);
+            border-radius: 0 12px 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Inter', 'Noto Color Emoji', sans-serif;
+        }
+
+        .lang-title .flag {
+            font-family: 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+            font-size: 1.5em;
+            line-height: 1;
+        }
+
+        .lang-title span {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #7a7f87;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+
+        h2 {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 2.4rem;
+            margin-bottom: 1rem;
+            color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px dashed #2a2a2a;
+            padding-bottom: 0.6rem;
+            letter-spacing: -0.2px;
+        }
+
+        h2 .icon-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #0f0f0f;
+            border: 1px solid #2a2a2a;
+            color: #aaa;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        h2:hover .icon-circle {
+            background: #1a1a1a;
+            border-color: #444;
+            color: #ddd;
+            box-shadow: 0 0 15px rgba(120, 120, 120, 0.15);
+        }
+
+        h3 {
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin-top: 1.6rem;
+            margin-bottom: 0.4rem;
+            color: #c8cdd4;
+        }
+
+        p {
+            margin-bottom: 1.1rem;
+            color: #cacaca;
+            font-size: 0.98rem;
+        }
+
+
+        ul {
+            list-style: none;
+            margin-left: 0.3rem;
+            margin-bottom: 1.3rem;
+        }
+
+        li {
+            margin-bottom: 0.85rem;
+            padding-left: 2rem;
+            position: relative;
+            color: #bebebe;
+            font-size: 0.97rem;
+            transition: color 0.2s;
+        }
+
+        li::before {
+            content: "▹";
+            position: absolute;
+            left: 0.2rem;
+            color: #8a8a8a;
+            font-weight: 400;
+            font-size: 1rem;
+        }
+
+        li:hover {
+            color: #d8d8d8;
+        }
+
+        strong {
+            color: #f5f5f5;
+            font-weight: 600;
+        }
+
+        /* ===== CAJA DE PROHIBIDOS ===== */
+        .rule-highlight {
+            background: var(--danger-bg);
+            border-radius: var(--radius-md);
+            padding: 1.4rem 1.8rem;
+            margin: 1.8rem 0 2rem 0;
+            border: 1px solid #2a1515;
+            box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.7), 0 4px 15px rgba(100, 30, 30, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rule-highlight::before {
+            content: "⚠";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 4rem;
+            opacity: 0.08;
+            color: #ff6b6b;
+            pointer-events: none;
+        }
+
+        .rule-highlight:hover {
+            border-color: #4a2020;
+            box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.7), 0 6px 25px rgba(120, 40, 40, 0.15);
+        }
+
+        .rule-highlight p {
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+            color: #e8caca;
+        }
+
+        .rule-highlight ul {
+            margin-bottom: 0.2rem;
+        }
+
+        .rule-highlight li {
+            color: #ccb0b0;
+        }
+
+        .rule-highlight li::before {
+            color: #b06060;
+        }
+
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #2e2e2e, #444, #2e2e2e, transparent);
+            margin: 3rem 0 2.5rem 0;
+            position: relative;
+        }
+
+        .divider::after {
+            content: "⚡";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #000;
+            padding: 0 16px;
+            color: #555;
+            font-size: 1.2rem;
+        }
+
+
+        .footer-note {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid #1c1c1c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            animation: fadeIn 1.2s ease forwards;
+            opacity: 0;
+            animation-delay: 0.5s;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: #9a9a9a;
+        }
+
+        .footer-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            border-bottom: 1px dotted #3a3a3a;
+            padding-bottom: 2px;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+            border-bottom-color: #aaa;
+            transform: translateY(-1px);
+        }
+
+        .footer-links i {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .footer-divider-dot {
+            color: #444;
+            font-size: 0.7rem;
+        }
+
+        .footer-copyright {
+            font-size: 0.75rem;
+            color: #5a5a5a;
+            letter-spacing: 0.5px;
+            margin-top: 0.3rem;
+        }
+
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .logo-img {
+                width: 56px;
+                height: 56px;
+            }
+
+            .lang-title {
+                font-size: 1.4rem;
+                padding-left: 1rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+                gap: 8px;
+            }
+
+            h2 .icon-circle {
+                width: 28px;
+                height: 28px;
+                font-size: 0.75rem;
+            }
+
+            .terms-wrapper {
+                padding: 1.8rem 1.1rem 1.2rem;
+            }
+
+            .footer-links {
+                gap: 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="terms-wrapper" id="termsContainer">
+
+        <div class="header-logo animate-fade-in">
+            <div class="logo-container">
+
+                <img src="logo.png" alt="Aqirax AI Logo" class="logo-img" id="logoImage"
+                    onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
+                <div class="logo-fallback" id="logoFallback" style="display: none;">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+            </div>
+            <h1>AQIRAX AI</h1>
+            <div class="subhead">
+                <i class="fa-solid fa-file-contract"></i>
+                Términos de Servicio · Terms of Service
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+        </div>
+
+
+        <div class="lang-section animate-slide-left delay-1">
+            <div class="lang-title">
+                <span class="flag">🇪🇸</span> Español <span>— Versión en castellano</span>
+            </div>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-check-circle"></i></span>
+                1. Aceptación de los Términos
+            </h2>
+            <p>Al acceder y utilizar <strong>Aqirax AI</strong>, aceptas cumplir con los presentes Términos de Servicio.
+                Si no estás de acuerdo con alguna parte de estos términos, debes suspender el uso del servicio de
+                inmediato.</p>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-microchip"></i></span>
+                2. Descripción del Servicio
+            </h2>
+            <p><strong>Aqirax AI</strong> proporciona acceso a modelos de inteligencia artificial para procesamiento de
+                texto, análisis de visión, generación de imágenes, generación de video y modelos sin censura (texto e
+                imagen).</p>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-user-shield"></i></span>
+                3. Responsabilidad del Usuario
+            </h2>
+            <ul>
+                <li>El usuario es el <strong>único responsable</strong> por los comandos ("prompts") ingresados y por el
+                    contenido generado mediante la plataforma.</li>
+                <li>El uso de modelos sin censura <strong>no exime</strong> al usuario del cumplimiento de las leyes
+                    locales e internacionales aplicables.</li>
+            </ul>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-ban"></i></span>
+                4. Usos Prohibidos
+            </h2>
+            <p>Independientemente de las capacidades del modelo, queda <strong>estrictamente prohibido</strong> utilizar
+                el servicio para:</p>
+            <div class="rule-highlight">
+                <ul>
+                    <li><i class="fa-solid fa-triangle-exclamation" style="margin-right: 8px; color: #c05050;"></i>
+                        Generación de contenido de explotación o abuso sexual infantil (CSAM).</li>
+                    <li><i class="fa-solid fa-eye-slash" style="margin-right: 8px; color: #c05050;"></i> Creación de
+                        imágenes o videos no consentidos de personas reales (deepfakes) con fines de acoso, extorsión o
+                        difamación.</li>
+                    <li><i class="fa-solid fa-gavel" style="margin-right: 8px; color: #c05050;"></i> Actividades
+                        ilegales, desarrollo de software malicioso o incitación a la violencia.</li>
+                </ul>
+            </div>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-copyright"></i></span>
+                5. Propiedad Intelectual y Exención de Garantías
+            </h2>
+            <ul>
+                <li>El usuario conserva los derechos sobre los resultados generados, asumiendo cualquier riesgo legal
+                    asociado a su uso o distribución.</li>
+                <li>El servicio se proporciona <strong>"tal cual"</strong> y <strong>"según disponibilidad"</strong>,
+                    sin garantías de precisión o disponibilidad ininterrumpida.</li>
+            </ul>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-user-lock"></i></span>
+                6. Suspensión de Servicio
+            </h2>
+            <p>Nos reservamos el derecho de <strong>suspender o revocar</strong> el acceso a cualquier usuario que viole
+                estas condiciones sin previo aviso.</p>
+        </div>
+
+        <div class="divider"></div>
+
+
+        <div class="lang-section animate-slide-left delay-2">
+            <div class="lang-title">
+                <span class="flag">🇬🇧</span> English <span>— English version</span>
+            </div>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-check-circle"></i></span>
+                1. Acceptance of Terms
+            </h2>
+            <p>By accessing or using <strong>Aqirax AI</strong>, you agree to be bound by these Terms of Service. If you
+                do not agree with any part of these terms, you must discontinue use of the service immediately.</p>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-microchip"></i></span>
+                2. Description of Service
+            </h2>
+            <p><strong>Aqirax AI</strong> provides access to artificial intelligence models capable of text processing,
+                vision analysis, image generation, video generation, and uncensored models (text and image).</p>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-user-shield"></i></span>
+                3. User Responsibility
+            </h2>
+            <ul>
+                <li>Users are <strong>solely responsible</strong> for the prompts submitted and the content generated
+                    through the platform.</li>
+                <li>The availability of uncensored models <strong>does not exempt</strong> users from compliance with
+                    applicable local and international laws.</li>
+            </ul>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-ban"></i></span>
+                4. Prohibited Uses
+            </h2>
+            <p>Regardless of model restrictions, you are <strong>strictly prohibited</strong> from using the service
+                for:</p>
+            <div class="rule-highlight">
+                <ul>
+                    <li><i class="fa-solid fa-triangle-exclamation" style="margin-right: 8px; color: #c05050;"></i>
+                        Generating Child Sexual Abuse Material (CSAM) or child exploitation content.</li>
+                    <li><i class="fa-solid fa-eye-slash" style="margin-right: 8px; color: #c05050;"></i> Creating
+                        non-consensual imagery or videos of real individuals (deepfakes) for harassment, extortion, or
+                        defamation.</li>
+                    <li><i class="fa-solid fa-gavel" style="margin-right: 8px; color: #c05050;"></i> Illegal activities,
+                        malware creation, or inciting real-world harm.</li>
+                </ul>
+            </div>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-copyright"></i></span>
+                5. Intellectual Property and Disclaimer
+            </h2>
+            <ul>
+                <li>Users retain rights to their generated outputs, assuming all legal risks associated with their
+                    publication or distribution.</li>
+                <li>The service is provided on an <strong>"as is"</strong> and <strong>"as available"</strong> basis
+                    without warranties of accuracy or continuous uptime.</li>
+            </ul>
+
+            <h2>
+                <span class="icon-circle"><i class="fa-solid fa-user-lock"></i></span>
+                6. Account Termination
+            </h2>
+            <p>We reserve the right to <strong>suspend or terminate</strong> access to any user who violates these terms
+                without prior notice.</p>
+        </div>
+
+
+        <div class="footer-note">
+            <div class="footer-links">
+                <a href="mailto:aqirax.ai@gmail.com">
+                    <i class="fa-solid fa-envelope"></i>
+                    aqirax.ai@gmail.com
+                </a>
+                <span class="footer-divider-dot">•</span>
+                <a href="https://aqirax.com/support" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-solid fa-headset"></i>
+                    aqirax.com/support
+                </a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 AQIRAX AI · Todos los derechos reservados · All rights reserved
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-up');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+
+            document.querySelectorAll('h2').forEach(el => {
+                observer.observe(el);
+            });
+
+
+            document.querySelectorAll('.rule-highlight').forEach(el => {
+                observer.observe(el);
+            });
+
+
+            const logoImg = document.getElementById('logoImage');
+            if (logoImg) {
+                logoImg.addEventListener('mouseenter', () => {
+                    logoImg.style.transform = 'scale(1.06)';
+                });
+                logoImg.addEventListener('mouseleave', () => {
+                    logoImg.style.transform = 'scale(1)';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
