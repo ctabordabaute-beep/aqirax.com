@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Docs| Aqirax AI</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --accent: #c084fc;
+            --text: #ffffff;
+            --text-bright: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --code-bg: rgba(0, 0, 0, 0.4);
+            --code-border: rgba(255, 255, 255, 0.15);
+            --max-width: 900px;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+            padding: 2rem 1rem;
+            background: #0a0a12;
+        }
+
+        .bg-video-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.55;
+        }
+
+        .content-wrapper {
+            width: 100%;
+            max-width: var(--max-width);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .logo-container img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            border-radius: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-bright);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .header h1 svg {
+            width: 2rem;
+            height: 2rem;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .header h2 {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 0.5rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            padding: 1.8rem 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .section:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .section:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .section:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .section:nth-child(4) {
+            animation-delay: 0.5s;
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .section h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.01em;
+        }
+
+        .section h3 .icon {
+            margin-right: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section h3 .icon svg {
+            width: 1.3rem;
+            height: 1.3rem;
+            fill: currentColor;
+        }
+
+        .endpoint-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .endpoint-list li {
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.7rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--text-bright);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-family: var(--font-mono);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .endpoint-list li:hover {
+            transform: translateX(5px);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .endpoint-list li .method {
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .method.post {
+            background: rgba(59, 130, 246, 0.3);
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+        }
+
+        .method.get {
+            background: rgba(34, 197, 94, 0.3);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, 0.5);
+        }
+
+        .endpoint-list li .url {
+            color: var(--text-bright);
+            word-break: break-all;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            overflow-x: auto;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #e8e8f0;
+            position: relative;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .code-block .lang-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 1rem;
+            font-family: var(--font-sans);
+        }
+
+        .code-block .lang-badge img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .code-block code {
+            font-family: var(--font-mono);
+            color: #e8e8f0;
+        }
+
+        .code-block .comment {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .code-block .keyword {
+            color: #c084fc;
+        }
+
+        .code-block .string {
+            color: #86efac;
+        }
+
+        .code-block .number {
+            color: #fbbf24;
+        }
+
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section {
+                padding: 1.2rem 1.3rem;
+            }
+
+            .logo-container img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .code-block {
+                padding: 1rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+
+            .section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-video-wrapper" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="auto">
+            <source src="bg2.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="header">
+            <div class="logo-container">
+                <img src="logo.png" alt="Aqirax AI Logo">
+            </div>
+            <h1>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                </svg>
+                DOCUMENTACIÓN DE API
+            </h1>
+            <h2>Integra Aqirax AI en tus aplicaciones</h2>
+        </div>
+
+
+        <div class="section">
+            <h3>
+                <span class="icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                    </svg>
+                </span>
+                Endpoints
+            </h3>
+            <ul class="endpoint-list">
+                <li>
+                    <span class="method post">POST</span>
+                    <span class="url">https://api.aqirax.net/v1/chat/completions</span>
+                </li>
+                <li>
+                    <span class="method post">POST</span>
+                    <span class="url">https://api.aqirax.net/v1/images/generations</span>
+                </li>
+                <li>
+                    <span class="method post">POST</span>
+                    <span class="url">https://api.aqirax.net/v1/videos</span>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="section">
+            <h3>
+                <span class="icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                        alt="JavaScript" width="24" height="24" />
+                </span>
+                JavaScript
+            </h3>
+            <div class="code-block">
+                <div class="lang-badge">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                        alt="JavaScript" width="20" height="20" />
+                    JavaScript
+                </div>
+                <pre><code><span class="keyword">const</span> response = <span class="keyword">await</span> <span class="keyword">fetch</span>(<span class="string">'https://api.aqirax.net/v1/chat/completions'</span>, {
+  method: <span class="string">'POST'</span>,
+  headers: {
+    <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>,
+    <span class="string">'Authorization'</span>: <span class="string">'Bearer TU_API_KEY_AQUI'</span>
+  },
+  body: <span class="keyword">JSON</span>.<span class="keyword">stringify</span>({
+    model: <span class="string">'aqirax-eco-3.1'</span>,
+    messages: [
+      { role: <span class="string">'user'</span>, content: <span class="string">'¡Hola! ¿Quién eres?'</span> }
+    ],
+    temperature: <span class="number">0.7</span>
+  })
+});
+
+<span class="keyword">const</span> data = <span class="keyword">await</span> response.<span class="keyword">json</span>();
+<span class="keyword">console</span>.<span class="keyword">log</span>(data.choices[<span class="number">0</span>].message.content);</code></pre>
+            </div>
+        </div>
+
+
+        <div class="section">
+            <h3>
+                <span class="icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                        alt="Python" width="24" height="24" />
+                </span>
+                Python
+            </h3>
+            <div class="code-block">
+                <div class="lang-badge">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                        alt="Python" width="20" height="20" />
+                    Python
+                </div>
+                <pre><code><span class="keyword">import</span> requests
+
+url = <span class="string">"https://api.aqirax.net/v1/chat/completions"</span>
+headers = {
+    <span class="string">"Authorization"</span>: <span class="string">"Bearer TU_API_KEY_AQUI"</span>,
+    <span class="string">"Content-Type"</span>: <span class="string">"application/json"</span>
+}
+payload = {
+    <span class="string">"model"</span>: <span class="string">"aqirax-eco-3.1"</span>,
+    <span class="string">"messages"</span>: [
+        {<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"¡Hola! ¿Quién eres?"</span>}
+    ],
+    <span class="string">"temperature"</span>: <span class="number">0.7</span>
+}
+
+response = requests.<span class="keyword">post</span>(url, headers=headers, json=payload)
+<span class="keyword">print</span>(response.<span class="keyword">json</span>()[<span class="string">"choices"</span>][<span class="number">0</span>][<span class="string">"message"</span>][<span class="string">"content"</span>])</code></pre>
+            </div>
+        </div>
+
+
+        <div class="section">
+            <h3>
+                <span class="icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Terminal"
+                        width="24" height="24" />
+                </span>
+                cURL
+            </h3>
+            <div class="code-block">
+                <div class="lang-badge">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Terminal"
+                        width="20" height="20" />
+                    Terminal
+                </div>
+                <pre><code>curl https://api.aqirax.net/v1/chat/completions \
+  -H <span class="string">"Content-Type: application/json"</span> \
+  -H <span class="string">"Authorization: Bearer TU_API_KEY_AQUI"</span> \
+  -d <span class="string">'{
+    "model": "aqirax-eco-3.1",
+    "messages": [{"role": "user", "content": "¡Hola!"}]
+  }'</span></code></pre>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
